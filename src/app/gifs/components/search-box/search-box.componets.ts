@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { log } from 'console';
 
 @Component({
     selector: 'gifs-search-box',
@@ -7,17 +8,21 @@ import { Component } from '@angular/core';
     <input type="text" 
     class="form-control" 
     placeholder="Buscar Gifs..." 
-    (keyup.enter)="searchTag(txtTagInput.value)"
+    (keyup.enter)="searchTag()"
     #txtTagInput
     >
     `
 })
 
 export class SearchBoxComponent  {
+
+    @ViewChild('txtTagInput') // El argumento txtTagInput referencia al #txtTagInput
+    tagInput!: ElementRef<HTMLInputElement>;
+
     constructor() { }
 
-    searchTag(newTag: string) {
-        console.log(newTag);
-        
+    searchTag() {
+       const newTag=this.tagInput.nativeElement.value;
+       console.log(newTag);
     }
 }
