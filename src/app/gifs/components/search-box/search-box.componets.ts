@@ -1,5 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { log } from 'console';
+import { GifsService } from '../../services/gifs.service';
 
 @Component({
     selector: 'gifs-search-box',
@@ -19,10 +20,12 @@ export class SearchBoxComponent  {
     @ViewChild('txtTagInput') // El argumento txtTagInput referencia al #txtTagInput
     tagInput!: ElementRef<HTMLInputElement>;
 
-    constructor() { }
+    constructor( private GifsService:GifsService) { }
 
     searchTag() {
        const newTag=this.tagInput.nativeElement.value;
+       this.GifsService.searchTag(newTag);
+       this.tagInput.nativeElement.value="";
        console.log(newTag);
     }
 }
