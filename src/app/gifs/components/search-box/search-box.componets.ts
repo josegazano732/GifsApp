@@ -20,12 +20,12 @@ export class SearchBoxComponent  {
     @ViewChild('txtTagInput') // El argumento txtTagInput referencia al #txtTagInput
     tagInput!: ElementRef<HTMLInputElement>;
 
-    constructor( private GifsService:GifsService) { }
+    constructor( private gifsService:GifsService) { }
 
     searchTag() {
        const newTag=this.tagInput.nativeElement.value;
-       this.GifsService.searchTag(newTag);
+       this.gifsService.searchTag(newTag);
        this.tagInput.nativeElement.value="";
-       console.log(newTag);
+       // console.log(newTag);
     }
 }

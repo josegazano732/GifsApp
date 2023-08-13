@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GifsService } from 'src/app/gifs/services/gifs.service';
 
 @Component({
   selector: 'shared-sidebar',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SidebarComponent implements OnInit {
 
-  constructor() { }
 
-  ngOnInit(): void {
-  }
+  constructor(
+    private gifsService:GifsService
+  ) { }
+
+  ngOnInit(): void {}
+
+      get tags(){
+        return this.gifsService.tagsHistory;
+      }
 
 }
