@@ -1,14 +1,18 @@
 import { Injectable } from '@angular/core';
-import { promises } from 'dns';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Gif, SearchResponse } from '../interfaces/gifs.interfaces';
+
 
 @Injectable({providedIn: 'root'})
 export class GifsService {
 
+    public gifsList:Gif[]=[];
+
     private _history: string[]=[];
-
     private apiKey:string='lU4Otdgj2booptknVCgbaT4qioEFT1Yi';
+    private serviceUrl:string= 'http://api.giphy.com/v1/gifs'
 
-    constructor() { }
+    constructor( private http: HttpClient ) { }
     
     get tagsHistory(){
         return [...this._history];
@@ -24,13 +28,25 @@ export class GifsService {
         this._history= this._history.splice(0,10);
     }
 // Esta es una forma de realizarlo con javascript una peticion API
-    async searchTag(tag:string):Promise <void> {
+    searchTag(tag:string):void {
         if (tag.length===0) return; // Si el tag o el input es igual a 0 no retorna nada.
         this.organizeHistory(tag);
         //console.log(this._history);
         
-        fetch('https://api.giphy.com/v1/gifs/search?api_key=lU4Otdgj2booptknVCgbaT4qioEFT1Yi&q=valorant&limit=10')
-            .then( res=> res.json())
-            .then( data=> console.log(data))
+        const params= new HttpParams()
+        .set('api_key',this.apiKey)
+        .set('limit',10)
+        .set('q',tag)
+
+        this.http.get<SearchResponse>(`${this.serviceUrl}/search`,{ params })
+        .subscribe(resp => {
+            
+            this.gifsList=resp.data;
+            //console.log(this.gifsList);
+            console.log({gifs: this.gifsList});
+            
+            
+        });
+            
     }
 }
