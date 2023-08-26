@@ -12,7 +12,9 @@ export class GifsService {
     private apiKey:string='lU4Otdgj2booptknVCgbaT4qioEFT1Yi';
     private serviceUrl:string= 'http://api.giphy.com/v1/gifs'
 
-    constructor( private http: HttpClient ) { }
+    constructor( private http: HttpClient ) {
+        this.loadLocalStorage();
+     }
     
     get tagsHistory(){
         return [...this._history];
@@ -26,7 +28,22 @@ export class GifsService {
         }
         this._history.unshift(tag);
         this._history= this._history.splice(0,10);
+        this.saveLocalStorage();
     }
+
+    // Agrega datos al localStorage
+    private saveLocalStorage():void {
+        localStorage.setItem('history', JSON.stringify(this._history))
+    }
+
+    private loadLocalStorage(): void{
+        if (!localStorage.getItem('history')) {
+            return;
+        }
+        this._history= JSON.parse(localStorage.getItem('history')!)
+    }
+
+
 // Esta es una forma de realizarlo con javascript una peticion API
     searchTag(tag:string):void {
         if (tag.length===0) return; // Si el tag o el input es igual a 0 no retorna nada.
