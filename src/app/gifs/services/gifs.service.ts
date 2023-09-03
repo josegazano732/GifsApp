@@ -31,18 +31,19 @@ export class GifsService {
         this.saveLocalStorage();
     }
 
-    // Agrega datos al localStorage
+    // Agrega datos que existan en _history al localStorage
     private saveLocalStorage():void {
         localStorage.setItem('history', JSON.stringify(this._history))
     }
 
+    // Obtenemos los datos que existan en le localstorage
     private loadLocalStorage(): void{
         if (!localStorage.getItem('history')) {
             return;
         }
         this._history= JSON.parse(localStorage.getItem('history')!)
 
-
+        // Retornamos el primer elemento del _history si es mayor 0
         if (this._history.length === 0) return;
         this.searchTag(this._history[0])
     }

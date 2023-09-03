@@ -11,6 +11,7 @@ export class CardListComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  
   @Input()
   public gifs: Gif[]=[];
 }
