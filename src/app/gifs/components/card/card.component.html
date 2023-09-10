@@ -6,15 +6,23 @@
         <!-- Lo renderizamos -->
         <div class="card mb-2 text-center bg-black">
             <!--TODO: Crear Imagen -->
+
+            <shared-lazy-image
+            [url]="gifs.images.downsized_medium.url"
+            [alt]="gifs.title || 'No Title'"
+            ></shared-lazy-image>
+
+            <!-- 
             <img 
             [src]="gifs.images.downsized_medium.url" 
             [alt]="gifs.title"
             class="card-img-top"
             >
+             -->
 
             <div class=" card-body">
                 <p class=" card-text text-white">
-                    {{gifs.title}}
+                    {{gifs.title || 'No title' }}  <!-- Si no tiene titulo se muestra 'No title' -->
                 </p>
             </div>
         </div>
